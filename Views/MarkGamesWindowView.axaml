@@ -1,0 +1,274 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PV.ViewModels"
+        xmlns:m="using:PV.Models"
+        xmlns:v="using:PV.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="675"
+        x:Class="PV.Views.MarkGamesWindowView">
+  <Design.DataContext>
+    <vm:MarkGamesWindowViewModel/>
+  </Design.DataContext>
+
+  <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
+    <Grid ColumnDefinitions="Auto,Auto,*" RowDefinitions="1*,30" Margin="4">
+
+      <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0">
+
+        <!-- Mark by player -->
+        <Border BorderBrush="Black" BorderThickness="1" Padding="5">
+          <StackPanel>
+
+            <TextBlock Text="Mark by Player Options" Classes="h1"/>
+
+            <CheckBox Content="Mark by player" Classes="dense"
+                      IsChecked="{Binding Filter.ByPlayerParams.IsMarkByPlayer}"/>
+            <CheckBox Content="Also highlight this player" Classes="dense"
+                      IsChecked="{Binding Filter.ByPlayerParams.IsHighlightThisPlayer}"/>
+
+            <StackPanel Orientation="Horizontal">
+              <TextBlock HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Classes="dense paddingRight5"
+                Text="Player:"/>
+              <ComboBox PlaceholderText="Player name..." Items="{Binding SamplePlayers}" Classes="dense minWidth200"
+                        SelectedItem="{Binding Filter.ByPlayerParams.SelectedPlayer}"/>
+            </StackPanel>
+
+            <Border BorderBrush="Black" BorderThickness="1" Padding="5" Margin="5">
+
+              <StackPanel>
+
+                <TextBlock Text="Player Parameters" Classes="h2"/>
+
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Classes="dense paddingRight5"
+                    Text="Saw the:"/>
+                  <ComboBox PlaceholderText="Saw Round"
+                            Items="{Binding Rounds}"
+                            SelectedItem="{Binding Filter.ByPlayerParams.SawRound}"
+                            Classes="dense minWidth200">
+                    <ComboBox.ItemTemplate>
+                      <DataTemplate>
+                        <TextBlock Text="{Binding LongName}"/>
+                      </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                  </ComboBox>
+                </StackPanel>
+                <CheckBox Content="Raise + Fold same round" Classes="dense" IsChecked="{Binding Filter.ByPlayerParams.IsRaiseAndFoldSameRound}"/>
+                <CheckBox Content="Was Dealt In" Classes="dense" IsChecked="{Binding Filter.ByPlayerParams.WasDealtIn}"/>
+                <CheckBox Content="Went All In" Classes="dense" IsChecked="{Binding Filter.ByPlayerParams.WentAllIn}"/>
+
+                <TextBlock Classes="dense" Text="Player Positions:"/>
+                <Border BorderBrush="Black" BorderThickness="1" MaxWidth="150" HorizontalAlignment="Left">
+                  <ItemsRepeater Items="{Binding PlayerPositions}" MaxWidth="125" Margin="2">
+                    <ItemsRepeater.ItemTemplate>
+                      <DataTemplate DataType="m:PlayerPosition">
+                        <TextBlock Text="{Binding ShortName}" Classes="dense"/>
+                      </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                    <ItemsRepeater.Layout>
+                      <UniformGridLayout MinItemWidth="50" MinColumnSpacing="10" ItemsJustification="SpaceBetween"/>
+                    </ItemsRepeater.Layout>
+                  </ItemsRepeater>
+                </Border>
+
+                <TextBlock Classes="dense paddingTop5" Text="Player per-round actions:"/>
+                <StackPanel Orientation="Horizontal">
+
+                  <!-- Player per-round actions / Round listbox -->
+                  <Border BorderBrush="Black" BorderThickness="1" MaxWidth="150" HorizontalAlignment="Left">
+                    <ItemsRepeater Items="{Binding Rounds}" MaxWidth="175" Margin="2">
+                      <ItemsRepeater.ItemTemplate>
+                        <DataTemplate DataType="m:Round">
+                          <TextBlock Text="{Binding LongName}" Classes="dense"/>
+                        </DataTemplate>
+                      </ItemsRepeater.ItemTemplate>
+                      <ItemsRepeater.Layout>
+                        <UniformGridLayout MinItemWidth="80" MinColumnSpacing="10" ItemsJustification="SpaceBetween"/>
+                      </ItemsRepeater.Layout>
+                    </ItemsRepeater>
+                  </Border>
+
+                  <!-- Player per-round actions / Player behaviors listbox -->
+                  <Border BorderBrush="Black" BorderThickness="1" MaxWidth="150" HorizontalAlignment="Left" Classes="marginLeft5">
+                    <ItemsRepeater Items="{Binding ActionBehaviors}" MaxWidth="125" Margin="2">
+                      <ItemsRepeater.ItemTemplate>
+                        <DataTemplate DataType="m:Round">
+                          <TextBlock Text="{Binding ShortName}" Classes="dense"/>
+                        </DataTemplate>
+                      </ItemsRepeater.ItemTemplate>
+                      <ItemsRepeater.Layout>
+                        <UniformGridLayout MinItemWidth="50" MinColumnSpacing="10" ItemsJustification="SpaceBetween"/>
+                      </ItemsRepeater.Layout>
+                    </ItemsRepeater>
+                  </Border>
+
+
+                </StackPanel>
+
+              </StackPanel>
+            </Border>
+
+          </StackPanel>
+        </Border>
+
+        <!-- Mark by pot size -->
+        <Border BorderBrush="Black" BorderThickness="1" Padding="5" Classes="marginTop5">
+          <StackPanel>
+
+            <TextBlock Text="Mark by Pot Size Options" Classes="h1"/>
+
+            <CheckBox Content="Mark by pot size" Classes="dense" IsChecked="{Binding Filter.ByPotSizeParams.IsMarkByPotSize}"/>
+
+            <StackPanel Orientation="Horizontal">
+              <RadioButton GroupName="radGrpMarkByPotSize" Content="&lt;" Classes="dense"/>
+              <RadioButton GroupName="radGrpMarkByPotSize" Content="&lt;=" Classes="dense marginLeft5"/>
+              <RadioButton GroupName="radGrpMarkByPotSize" Content="&gt;=" Classes="dense marginLeft5"/>
+              <RadioButton GroupName="radGrpMarkByPotSize" Content="&gt;" Classes="dense marginLeft5"/>
+            </StackPanel>
+
+          </StackPanel>
+        </Border>
+
+      </StackPanel>
+
+      <v:HemFilterView Grid.Row="0" Grid.Column="1" DataContext="{Binding HemFilterViewModel}"
+                       Margin="5,0,5,0"/>
+
+      <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="2">
+
+        <!-- Mark by stack size -->
+        <Border BorderBrush="Black" BorderThickness="1" Padding="3" Margin="2">
+          <StackPanel>
+            <TextBlock Text="Mark by Stack Size" Classes="h1"/>
+            <CheckBox Content="Mark by stack size" Classes="dense"/>
+
+            <Grid ColumnDefinitions="Auto,*" RowDefinitions="*,*">
+                <CheckBox Content="Min" Classes="dense" Grid.Column="0" Grid.Row="0"/>
+                <TextBox Grid.Column="1" Grid.Row="0" Classes="dense"/>
+
+                <CheckBox Content="Max" Classes="dense" Grid.Column="0" Grid.Row="1"/>
+                <TextBox Grid.Column="1" Grid.Row="1" Classes="dense"/>
+            </Grid>
+
+          </StackPanel>
+        </Border>
+
+        <!-- Mark by tourn id-->
+        <Border BorderBrush="Black" BorderThickness="1" Padding="3" Margin="2">
+          <StackPanel>
+            <TextBlock Text="Mark by Tourn Id" Classes="h1"/>
+            <CheckBox Content="Mark by tourn id" Classes="dense"/>
+
+            <Grid ColumnDefinitions="Auto,*" RowDefinitions="*">
+              <CheckBox Content="Tourn Id:" Classes="dense"
+                        Grid.Column="0" Grid.Row="0"/>
+              <TextBox Classes="dense"
+                       Grid.Column="1" Grid.Row="0"/>
+            </Grid>
+          </StackPanel>
+        </Border>
+
+        <!-- Cash/Tourns -->
+        <Border BorderBrush="Black" BorderThickness="1" Padding="3" Margin="2">
+          <StackPanel>
+            <TextBlock Text="Mark by Cash/Tourns" Classes="h1"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+              <RadioButton GroupName="radGrpMarkByCashTourns" Content="Cash only" Classes="dense"/>
+              <RadioButton GroupName="radGrpMarkByCashTourns" Content="Tourns only" Classes="dense marginLeft5"/>
+              <RadioButton GroupName="radGrpMarkByCashTourns" Content="All" Classes="dense marginLeft5"/>
+            </StackPanel>
+          </StackPanel>
+        </Border>
+
+        <!-- Mark by game type -->
+        <Border BorderBrush="Black" BorderThickness="1" Padding="5" Classes="marginTop5">
+          <StackPanel>
+            <TextBlock Text="Mark by Game Type" Classes="h1"/>
+
+            <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto" HorizontalAlignment="Center">
+              <RadioButton GroupName="radGrpMarkByGameType" Content="Hold'em only" Classes="dense"
+                           Grid.Column="0" Grid.Row="0"/>
+              <RadioButton GroupName="radGrpMarkByGameType" Content="Omaha only" Classes="dense"
+                           Grid.Column="1" Grid.Row="0"/>
+              <RadioButton GroupName="radGrpMarkByGameType" Content="non-Hold'em/Omaha only" Classes="dense"
+                           Grid.Column="0" Grid.Row="1"/>
+              <RadioButton GroupName="radGrpMarkByGameType" Content="All" Classes="dense"
+                           Grid.Column="1" Grid.Row="1"/>
+            </Grid>
+          </StackPanel>
+        </Border>
+
+        <!-- Mark by num dealt in -->
+        <Border BorderBrush="Black" BorderThickness="1" Padding="5" Classes="marginTop5">
+          <StackPanel>
+            <TextBlock Text="Mark by Num Dealt In" Classes="h1"/>
+            <CheckBox Content="Mark by num dealt in" Classes="dense"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+              <CheckBox Content="Heads-up" Classes="dense marginLeft5"/>
+              <CheckBox Content="3-4" Classes="dense marginLeft5"/>
+              <CheckBox Content="5-6" Classes="dense marginLeft5"/>
+              <CheckBox Content="Full ring" Classes="dense marginLeft5"/>
+            </StackPanel>
+            
+          </StackPanel>
+        </Border>
+
+        <!-- Mark by date -->
+        <Border BorderBrush="Black" BorderThickness="1" Padding="5" Classes="marginTop5">
+          <StackPanel>
+            <TextBlock Text="Mark by Date" Classes="h1"/>
+
+            <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto">
+              <CheckBox Content="Start Date" Classes="dense"
+                        Grid.Column="0" Grid.Row="0"/>
+              <DatePicker Grid.Column="1" Grid.Row="0"/>
+
+              <CheckBox Content="End Date" Classes="dense"
+                        Grid.Column="0" Grid.Row="1"/>
+              <DatePicker Grid.Column="1" Grid.Row="1" />
+
+              <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                          Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                          Classes="marginTop5">
+                <Button Content="1 month" Classes="dense"/>
+                <Button Content="3 months" Classes="dense marginLeft2"/>
+                <Button Content="6 months" Classes="dense marginLeft2"/>
+                <Button Content="1 year" Classes="dense marginLeft2"/>
+                <Button Content="MTD" Classes="dense marginLeft2"/>
+                <Button Content="YTD" Classes="dense marginLeft2"/>
+                <Button Content="Last week" Classes="dense marginLeft2"/>
+              </StackPanel>
+            </Grid>
+
+          </StackPanel>
+        </Border>
+
+      </StackPanel>
+
+      <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3">
+        <DockPanel DockPanel.Dock="Right">
+          <CheckBox Content="Clear mark on all other?" Classes="dense marginLeft5"/>
+          <CheckBox Content="Clear highlight on all other?" Classes="dense marginLeft5"/>
+          <Button Content="Cancel"
+                  Command="{Binding Cancel}"
+                  Classes="marginLeft5"
+                  IsCancel="True"/>
+          <Button Content="OK" 
+                  Command="{Binding OK}"
+                  Classes="marginLeft5" 
+                  IsDefault="True"/>
+        </DockPanel>
+        <TextBlock DockPanel.Dock="Left"></TextBlock>
+      </DockPanel>
+
+    </Grid>
+
+  </ScrollViewer>
+</UserControl>

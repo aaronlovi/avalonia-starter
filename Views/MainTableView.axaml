@@ -1,0 +1,73 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PV.Views.MainTableView">
+  <DockPanel MinWidth="800" MinHeight="600">
+    <Menu DockPanel.Dock="Top">
+      <MenuItem Header="_File">
+        <MenuItem Header="Open Transcript..."></MenuItem>
+        <MenuItem Header="Open Multiple Transcripts..."></MenuItem>
+        <MenuItem Header="Save Transcript As..."></MenuItem>
+        <MenuItem Header="Same Marked Games As..."></MenuItem>
+        <MenuItem Header="Append Games..."></MenuItem>
+        <Separator/>
+        <MenuItem Header="MRU Items"></MenuItem>
+        <Separator/>
+        <MenuItem Header="Show Hand Text"></MenuItem>
+        <MenuItem Header="Show Invalid Games"></MenuItem>
+        <MenuItem Header="Show Pot Equity Report"></MenuItem>
+        <Separator/>
+        <MenuItem Header="Exit"></MenuItem>
+      </MenuItem>
+      <MenuItem Header="_Edit">
+        <MenuItem Header="Mark Games..."
+                  Command="{Binding ShowMarkGamesView}"/>
+        <MenuItem Header="Mark Games - Multiple Players..."></MenuItem>
+        <MenuItem Header="Remove Duplicates"></MenuItem>
+        <MenuItem Header="Remove Marked Games"></MenuItem>
+        <MenuItem Header="Unmark all games"></MenuItem>
+        <MenuItem Header="Remove w/no Suspect VPIP..."></MenuItem>
+        <MenuItem Header="Sort by Game #"></MenuItem>
+        <MenuItem Header="Sort by Tourn # then Date"></MenuItem>
+        <MenuItem Header="Sort by Date"></MenuItem>
+        <MenuItem Header="Sort by Table Name then Date"></MenuItem>
+        <MenuItem Header="Paste Transcript"></MenuItem>
+        <MenuItem Header="Append Transcript"></MenuItem>
+        <MenuItem Header="Copy Tournament Number"></MenuItem>
+        <MenuItem Header="Copy Game Number"></MenuItem>
+        <MenuItem Header="Go to Game Number..."></MenuItem>
+      </MenuItem>
+      <MenuItem Header="_Tools">
+        <MenuItem Header="Show Annotation Summary Window..."></MenuItem>
+        <MenuItem Header="Set Options..."></MenuItem>
+        <MenuItem Header="Show Autoplayback Controls..."></MenuItem>
+      </MenuItem>
+      <MenuItem Header="_Help">
+        <MenuItem Header="Show shortcut keys"></MenuItem>
+        <MenuItem Header="Show table position lookups"></MenuItem>
+        <Separator/>
+        <MenuItem Header="About"></MenuItem>
+      </MenuItem>
+    </Menu>
+
+    <Panel DockPanel.Dock="Bottom">
+
+      <DockPanel LastChildFill="True">
+        <Panel DockPanel.Dock="Bottom">
+          <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top">Status Bar</TextBlock>
+        </Panel>
+
+        <Panel DockPanel.Dock="Top">
+          <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                     Text="{Binding Filter}"/>
+        </Panel>
+
+      </DockPanel>
+      
+    </Panel>
+
+  </DockPanel>
+  
+</UserControl>

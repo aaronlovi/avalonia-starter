@@ -1,0 +1,108 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:PV"
+             x:Class="PV.App">
+  <Application.DataTemplates>
+    <local:ViewLocator/>
+  </Application.DataTemplates>
+
+  <Application.Styles>
+    <FluentTheme Mode="Light"/>
+  </Application.Styles>
+
+  <Application.Styles>
+    <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
+    <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
+    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Default.xaml"/>
+
+    <Style Selector="TextBlock.dense">
+      <Setter Property="FontSize" Value="11"/>
+    </Style>
+    <Style Selector="TextBlock.h1">
+      <Setter Property="FontSize" Value="14"/>
+      <Setter Property="FontWeight" Value="Bold"/>
+      <Setter Property="Background" Value="DarkBlue"/>
+      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="Padding" Value="2"/>
+      <Setter Property="Margin" Value="0,0,0,3"/>
+    </Style>
+    <Style Selector="TextBlock.h2">
+      <Setter Property="FontSize" Value="12"/>
+      <Setter Property="Background" Value="DarkGray"/>
+      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="Padding" Value="2"/>
+    </Style>
+    <Style Selector="TextBlock.paddingRight5">
+      <Setter Property="Padding" Value="0,0,5,0"/>
+    </Style>
+
+    <Style Selector="CheckBox.marginLeft5">
+      <Setter Property="Margin" Value="5,0,0,0"/>
+    </Style>
+    <Style Selector="CheckBox.dense">
+      <Setter Property="FontSize" Value="11"/>
+      <Setter Property="MinHeight" Value="15"/>
+    </Style>
+    <Style Selector="CheckBox.dense /template/ Border">
+      <Setter Property="RenderTransform">
+        <ScaleTransform ScaleX="0.70" ScaleY="0.70"/>
+      </Setter>
+    </Style>
+
+    <Style Selector="ComboBox.minWidth200">
+      <Setter Property="MinWidth" Value="200"/>
+    </Style>
+    <Style Selector="ComboBox.dense /template/ Grid">
+      <Setter Property="RenderTransform">
+        <ScaleTransform ScaleX="0.70" ScaleY="0.70"/>
+      </Setter>
+    </Style>
+
+    <Style Selector="TextBlock.paddingTop5">
+      <Setter Property="Padding" Value="0,5,0,0"/>
+    </Style>
+    
+    <Style Selector="Border.marginLeft5">
+      <Setter Property="Margin" Value="5,0,0,0"/>
+    </Style>
+    <Style Selector="Border.marginTop5">
+      <Setter Property="Margin" Value="0,5,0,0"/>
+    </Style>
+    
+    <Style Selector="RadioButton.marginLeft5">
+      <Setter Property="Margin" Value="5,0,0,0"/>
+    </Style>
+    <Style Selector="RadioButton.dense">
+      <Setter Property="FontSize" Value="11"/>
+    </Style>
+    <Style Selector="RadioButton.dense /template/ Ellipse">
+      <Setter Property="RenderTransform">
+        <ScaleTransform ScaleX="0.70" ScaleY="0.70"/>
+      </Setter>
+    </Style>
+
+    <Style Selector="TextBox.dense /template/ Border">
+      <Setter Property="RenderTransform">
+        <ScaleTransform ScaleX="0.70" ScaleY="0.70"/>
+      </Setter>
+    </Style>
+
+    <Style Selector="Button.marginLeft2">
+      <Setter Property="Margin" Value="2,0,0,0"/>
+    </Style>
+    <Style Selector="Button.marginLeft5">
+      <Setter Property="Margin" Value="5,0,0,0"/>
+    </Style>
+    <Style Selector="Button.dense">
+      <Setter Property="FontSize" Value="11"/>
+    </Style>
+
+    <Style Selector="StackPanel.marginLeft5">
+      <Setter Property="Margin" Value="5,0,0,0"/>
+    </Style>
+    <Style Selector="StackPanel.marginTop5">
+      <Setter Property="Margin" Value="0,5,0,0"/>
+    </Style>
+
+  </Application.Styles>
+</Application>

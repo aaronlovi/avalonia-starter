@@ -1,0 +1,202 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PV.ViewModels"
+             xmlns:m="using:PV.Models"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PV.Views.HemFilterView">
+  <Design.DataContext>
+    <vm:HemFilterViewModel/>
+  </Design.DataContext>
+
+  <UserControl.Styles>
+    <Style Selector="Border.selected">
+      <Setter Property="Background" Value="LightGreen"/>
+    </Style>
+    <Style Selector="Button.selected">
+      <Setter Property="Background" Value="LightGreen"/>
+    </Style>
+    <Style Selector="Button.selected:pointerover /template/ ContentPresenter">
+      <Setter Property="BorderBrush" Value="LightGreen"/>
+      <Setter Property="Background" Value="LightGreen"/>
+    </Style>
+    <Style Selector="Button.selected:pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="LightGreen"/>
+    </Style>
+    <Style Selector="Button:not(.selected) /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}"/>
+    </Style>
+    <Style Selector="Button:not(.selected):pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}"/>
+    </Style>
+    <Style Selector="Button:not(.selected):pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}"/>
+    </Style>
+    <Style Selector="Button.filterButton">
+      <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}"/>
+    </Style>
+    <Style Selector="Button.square /template/ ContentPresenter">
+      <Setter Property="CornerRadius" Value="0"/>
+    </Style>
+    <Style Selector="TextBlock.filterLabel">
+      <Setter Property="HorizontalAlignment" Value="Left"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="Padding" Value="2"/>
+      <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}"/>
+    </Style>
+    <Style Selector="TextBlock.marginBottom5">
+      <Setter Property="Margin" Value="0,0,0,5"/>
+    </Style>
+    <Style Selector="ItemsRepeater.marginBottom5">
+      <Setter Property="Margin" Value="0,0,0,5"/>
+    </Style>
+  </UserControl.Styles>
+
+  <Border BorderBrush="Black" BorderThickness="1" Padding="5">
+
+    <StackPanel>
+
+      <TextBlock Text="HEM Filter" Classes="h1 marginBottom5"/>
+
+      <ItemsRepeater Items="{Binding Holdings}" MaxWidth="364" Classes="marginBottom5">
+        <ItemsRepeater.ItemTemplate>
+          <DataTemplate DataType="m:HoldemHolding">
+            <Button Content="{Binding Item2.AsString}"
+                    Command="{Binding $parent[ItemsRepeater].DataContext.ToggleState}"
+                    CommandParameter="{Binding Item2.AsString}"
+                    BorderThickness="1"
+                    Padding="0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    FontSize="{StaticResource FontSizeSmall}"
+                    Classes.selected="{Binding Item1}"
+                    Classes="square"/>
+          </DataTemplate>
+        </ItemsRepeater.ItemTemplate>
+        <ItemsRepeater.Layout>
+          <UniformGridLayout MinItemWidth="28" MinItemHeight="28" MinColumnSpacing="0"/>
+        </ItemsRepeater.Layout>
+      </ItemsRepeater>
+
+      <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowDefinitions="*,*,*,*,*,*,*"
+            HorizontalAlignment="Center">
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="Suited Cards" Classes="filterLabel"/>
+        <Button Content="On" Grid.Column="1" Grid.Row="0" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.SuitedClicked}"
+                CommandParameter="1"/>
+        <Button Content="Off" Grid.Column="2" Grid.Row="0" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.SuitedClicked}"
+                CommandParameter="0"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="Offsuit Cards" Classes="filterLabel"/>
+        <Button Content="On" Grid.Column="1" Grid.Row="1" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.OffsuitClicked}"
+                CommandParameter="1"/>
+        <Button Content="Off" Grid.Column="2" Grid.Row="1" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.OffsuitClicked}"
+                CommandParameter="0"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Pocket Pairs" Classes="filterLabel"/>
+        <Button Content="On" Grid.Column="1" Grid.Row="2" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.PocketPairsClicked}"
+                CommandParameter="1"/>
+        <Button Content="Off" Grid.Column="2" Grid.Row="2" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.PocketPairsClicked}"
+                CommandParameter="0"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="3" Text="Suited Connectors" Classes="filterLabel"/>
+        <Button Content="On" Grid.Column="1" Grid.Row="3" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.SuitedConnectorsClicked}"
+                CommandParameter="1"/>
+        <Button Content="Off" Grid.Column="2" Grid.Row="3" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.SuitedConnectorsClicked}"
+                CommandParameter="0"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="4" Text="Unsuited Connectors" Classes="filterLabel"/>
+        <Button Content="On" Grid.Column="1" Grid.Row="4" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.UnsuitedConnectorsClicked}"
+                CommandParameter="1"/>
+        <Button Content="Off" Grid.Column="2" Grid.Row="4" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.UnsuitedConnectorsClicked}"
+                CommandParameter="0"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="5" Text="Suited 1-gappers" Classes="filterLabel"/>
+        <Button Content="On" Grid.Column="1" Grid.Row="5" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.SuitedOneGappersClicked}"
+                CommandParameter="1"/>
+        <Button Content="Off" Grid.Column="2" Grid.Row="5" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.SuitedOneGappersClicked}"
+                CommandParameter="0"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="6" Text="Unsuited 1-gappers" Classes="filterLabel"/>
+        <Button Content="On" Grid.Column="1" Grid.Row="6" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.UnsuitedOneGappersClicked}"
+                CommandParameter="1"/>
+        <Button Content="Off" Grid.Column="2" Grid.Row="6" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.UnsuitedOneGappersClicked}"
+                CommandParameter="0"/>
+
+        <TextBlock Grid.Column="3" Grid.Row="0" Text="Suited 2-gappers" Classes="filterLabel"/>
+        <Button Content="On" Grid.Column="4" Grid.Row="0" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.SuitedTwoGappersClicked}"
+                CommandParameter="1"/>
+        <Button Content="Off" Grid.Column="5" Grid.Row="0" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.SuitedTwoGappersClicked}"
+                CommandParameter="0"/>
+
+        <TextBlock Grid.Column="3" Grid.Row="1" Text="Offsuit 2-gappers" Classes="filterLabel"/>
+        <Button Content="On" Grid.Column="4" Grid.Row="1" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.OffsuitTwoGappersClicked}"
+                CommandParameter="1"/>
+        <Button Content="Off" Grid.Column="5" Grid.Row="1" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.OffsuitTwoGappersClicked}"
+                CommandParameter="0"/>
+
+        <TextBlock Grid.Column="3" Grid.Row="2" Text="Suited 3-gappers" Classes="filterLabel"/>
+        <Button Content="On" Grid.Column="4" Grid.Row="2" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.SuitedThreeGappersClicked}"
+                CommandParameter="1"/>
+        <Button Content="Off" Grid.Column="5" Grid.Row="2" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.SuitedThreeGappersClicked}"
+                CommandParameter="0"/>
+
+        <TextBlock Grid.Column="3" Grid.Row="3" Text="Offsuit 3-gappers" Classes="filterLabel"/>
+        <Button Content="On" Grid.Column="4" Grid.Row="3" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.OffsuitThreeGappersClicked}"
+                CommandParameter="1"/>
+        <Button Content="Off" Grid.Column="5" Grid.Row="3" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.OffsuitThreeGappersClicked}"
+                CommandParameter="0"/>
+
+        <TextBlock Grid.Column="3" Grid.Row="4" Text="Suited Broadways" Classes="filterLabel"/>
+        <Button Content="On" Grid.Column="4" Grid.Row="4" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.SuitedBroadwaysClicked}"
+                CommandParameter="1"/>
+        <Button Content="Off" Grid.Column="5" Grid.Row="4" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.SuitedBroadwaysClicked}"
+                CommandParameter="0"/>
+
+        <TextBlock Grid.Column="3" Grid.Row="5" Text="Unsuited Broadways" Classes="filterLabel"/>
+        <Button Content="On" Grid.Column="4" Grid.Row="5" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.UnsuitedBroadwaysClicked}"
+                CommandParameter="1"/>
+        <Button Content="Off" Grid.Column="5" Grid.Row="5" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.UnsuitedBroadwaysClicked}"
+                CommandParameter="0"/>
+
+        <TextBlock Grid.Column="3" Grid.Row="6" Text="All" Classes="filterLabel"/>
+        <Button Content="On" Grid.Column="4" Grid.Row="6" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.AllClicked}"
+                CommandParameter="1"/>
+        <Button Content="Off" Grid.Column="5" Grid.Row="6" Classes="filterButton"
+                Command="{Binding $parent[Grid].DataContext.AllClicked}"
+                CommandParameter="0"/>
+
+      </Grid>
+
+    </StackPanel>
+
+  </Border>
+
+</UserControl>
